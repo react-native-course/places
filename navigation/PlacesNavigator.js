@@ -26,7 +26,12 @@ const PlacesNavigator = createStackNavigator(
           })
       })
     },
-    PlaceDetail: PlaceDetailScreen,
+    PlaceDetail: {
+      screen: PlaceDetailScreen,
+      navigationOptions: ({ navigation: { getParam } }) => ({
+        title: getParam('placeTitle')
+      })
+    },
     NewPlace: {
       screen: NewPlaceScreen,
       navigationOptions: {

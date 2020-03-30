@@ -1,8 +1,16 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+//redux
+import { Provider } from 'react-redux';
+import configureStore from './store/configureStore';
 //navigator
 import PlacesNavigator from './navigation/PlacesNavigator';
 
+const store = configureStore();
+
 export default function App() {
-  return <PlacesNavigator />;
+  return (
+    <Provider store={store}>
+      <PlacesNavigator />
+    </Provider>
+  );
 }
