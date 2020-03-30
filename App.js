@@ -1,10 +1,8 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+//navigator
+import PlacesNavigator from './navigation/PlacesNavigator';
 
 export default function App() {
-  return (
-    <View>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
+  return <PlacesNavigator />;
 }
