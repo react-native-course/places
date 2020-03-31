@@ -10,7 +10,8 @@ import Colors from '../constants/Colors';
 
 const styles = StyleSheet.create({
   imagePicker: {
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 15
   },
   imagePreview: {
     width: '100%',
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const ImgPicker = () => {
+const ImgPicker = ({ onImageTaken }) => {
   const [pickedImage, setPickedImage] = useState();
 
   const verifyPermissions = async () => {
@@ -56,7 +57,7 @@ const ImgPicker = () => {
       aspect: [16, 9],
       quality: 0.5
     });
-
+    onImageTaken(uri);
     setPickedImage(uri);
   };
 

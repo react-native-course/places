@@ -13,9 +13,9 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_PLACE: {
       const {
-          placeData: { title }
+          placeData: { title, imagePath }
         } = action,
-        newPlace = new Place(new Date().toString(), title);
+        newPlace = new Place(new Date().toString(), title, imagePath);
       return updateObject(state, { places: state.places.concat(newPlace) });
     }
     default:

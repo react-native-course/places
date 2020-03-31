@@ -18,14 +18,14 @@ const PlacesListScreen = ({ navigation: { navigate } }) => {
       keyExtractor={(item) => item.id}
       renderItem={(itemData) => {
         const {
-          item: { title, id }
+          item: { title, id, imageUri }
         } = itemData;
         return (
           <PlaceItem
             onSelect={() =>
               navigate('PlaceDetail', { placeTitle: title, placeId: id })
             }
-            image={null}
+            image={imageUri}
             title={title}
             address=""
           />
