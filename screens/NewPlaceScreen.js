@@ -44,7 +44,7 @@ const NewPlaceScreen = ({ navigation: { goBack } }) => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView keyboardShouldPersistTaps="always">
       <View style={styles.form}>
         <Text style={styles.label}>Title</Text>
         <TextInput

@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 //react native
 import { View, Button, Text, Image, Alert, StyleSheet } from 'react-native';
 //permissions
-import * as Permissions from 'expo-permissions';
+import { askAsync, CAMERA, CAMERA_ROLL } from 'expo-permissions';
 //image picker
-import * as imagePicker from 'expo-image-picker';
+import { launchCameraAsync } from 'expo-image-picker';
 //constants
 import Colors from '../constants/Colors';
 
@@ -32,10 +32,7 @@ const ImgPicker = ({ onImageTaken }) => {
   const [pickedImage, setPickedImage] = useState();
 
   const verifyPermissions = async () => {
-    const result = await Permissions.askAsync(
-      Permissions.CAMERA,
-      Permissions.CAMERA_ROLL
-    );
+    const result = await askAsync(CAMERA, CAMERA_ROLL);
     if (result.status !== 'granted') {
       Alert.alert(
         'Insufficient permissions!',
@@ -52,7 +49,7 @@ const ImgPicker = ({ onImageTaken }) => {
     if (!hasPermission) {
       return;
     }
-    const { uri } = await imagePicker.launchCameraAsync({
+    const { uri } = await launchCameraAsync({
       allowsEditing: true,
       aspect: [16, 9],
       quality: 0.5
