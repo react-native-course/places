@@ -1,9 +1,9 @@
 //action types
-import { ADD_PLACE } from '../actionTypes';
+import { ADD_PLACE, SET_PLACES } from '../actionTypes';
 //file system
 import { documentDirectory, moveAsync } from 'expo-file-system';
-//sqlite DB configurations
-import { insertPlace } from '../../helpers/db';
+//sqlite DB methods
+import { insertPlace, fetchPlaces } from '../../helpers/db';
 
 export const addPlace = ({ title, imagePath }) => async (dispatch) => {
   //set image name
@@ -30,6 +30,18 @@ export const addPlace = ({ title, imagePath }) => async (dispatch) => {
   } catch (err) {
     console.log(err);
     //you can pass it to the screen to view it there
+    throw err;
+  }
+};
+
+export const loadPlaces = () => async (dispatch) => {
+  try {
+    const {
+      rows: { _array }
+    } = await fetchPlaces();
+    dispatch({ type: SET_PLACES, places: _array });
+  } catch (err) {
+    console.log(err);
     throw err;
   }
 };

@@ -1,5 +1,5 @@
 //action types
-import { ADD_PLACE } from '../actionTypes';
+import { ADD_PLACE, SET_PLACES } from '../actionTypes';
 //models
 import Place from '../../models/place';
 //utilities
@@ -17,6 +17,13 @@ const reducer = (state = initialState, action) => {
         } = action,
         newPlace = new Place(id.toString(), title, imagePath);
       return updateObject(state, { places: state.places.concat(newPlace) });
+    }
+    case SET_PLACES: {
+      return updateObject(state, {
+        places: action.places.map(
+          (pl) => new Place(pl.id.toString(), pl.title, pl.imageUri)
+        )
+      });
     }
     default:
       return state;
