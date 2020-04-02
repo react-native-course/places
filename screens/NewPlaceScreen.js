@@ -15,6 +15,7 @@ import Colors from '../constants/Colors';
 import { addPlace } from '../store/actions/placesActions';
 //components
 import ImagePicker from '../components/ImgPicker';
+import LocationPicker from '../components/LocationPicker';
 
 const styles = StyleSheet.create({
   form: {
@@ -53,6 +54,7 @@ const NewPlaceScreen = ({ navigation: { goBack } }) => {
           style={styles.textInput}
         />
         <ImagePicker onImageTaken={setSelectedImage} />
+        <LocationPicker />
         <Button
           title="Save Place"
           color={Colors.primary}
