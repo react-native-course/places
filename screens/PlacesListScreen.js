@@ -24,7 +24,7 @@ const PlacesListScreen = ({ navigation: { navigate } }) => {
       keyExtractor={(item) => item.id}
       renderItem={(itemData) => {
         const {
-          item: { title, id, imageUri }
+          item: { title, id, imageUri, address }
         } = itemData;
         return (
           <PlaceItem
@@ -33,7 +33,7 @@ const PlacesListScreen = ({ navigation: { navigate } }) => {
             }
             image={imageUri}
             title={title}
-            address=""
+            address={address}
           />
         );
       }}

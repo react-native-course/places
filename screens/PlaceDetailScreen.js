@@ -1,12 +1,68 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { ScrollView, View, Image, Text, StyleSheet } from 'react-native';
+//redux
+import { useSelector } from 'react-redux';
+//selectors
+import { getPlaces } from '../store/selectors/placesSelectors';
+//constants
+import Colors from '../constants/Colors';
+//components
+import MapPreview from '../components/MapPreview';
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  image: {
+    height: '35%',
+    minHeight: 300,
+    width: '100%',
+    backgroundColor: '#ccc'
+  },
+  locationContainer: {
+    marginVertical: 20,
+    width: '90%',
+    maxWidth: 350,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: 'black',
+    shadowOpacity: 0.26,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 8,
+    elevation: 5,
+    backgroundColor: 'white',
+    borderRadius: 10
+  },
+  addressContainer: {
+    padding: 20
+  },
+  address: {
+    color: Colors.primary,
+    textAlign: 'center'
+  },
+  mapPreview: {
+    width: '100%',
+    maxWidth: 350,
+    height: 300,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10
+  }
+});
 
-const PlaceDetailScreen = () => (
-  <View>
-    <Text>PlaceDetailScreen</Text>
-  </View>
-);
+const PlaceDetailScreen = ({ navigation: { getParam } }) => {
+  const placeId = getParam('placeId'),
+    { address, imageUri, lat, lng } = useSelector((state) =>
+      getPlaces({ state }).find((el) => el.id === placeId)
+    );
+
+  return (
+    <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+      <Image source={{ uri: imageUri }} style={styles.image} />
+      <View style={styles.locationContainer}>
+        <View style={styles.addressContainer}>
+          <Text style={styles.address}>{address}</Text>
+        </View>
+        <MapPreview style={styles.mapPreview} location={{ lat, lng }} />
+      </View>
+    </ScrollView>
+  );
+};
 
 export default PlaceDetailScreen;
