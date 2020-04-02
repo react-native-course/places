@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -34,9 +34,16 @@ const styles = StyleSheet.create({
   }
 });
 
-const LocationPicker = ({ navigate }) => {
+const LocationPicker = ({ navigate, getParam }) => {
   const [isFetching, setIsFetching] = useState(false),
     [pickedLocation, setPickedLocation] = useState();
+  const mapPickedLocation = getParam('pickedLocation');
+
+  useEffect(() => {
+    if (mapPickedLocation) {
+      setPickedLocation(mapPickedLocation);
+    }
+  }, [mapPickedLocation]);
 
   const verifyPermissions = async () => {
     const result = await askAsync(LOCATION);

@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const NewPlaceScreen = ({ navigation: { goBack, navigate } }) => {
+const NewPlaceScreen = ({ navigation: { goBack, navigate, getParam } }) => {
   const [titleValue, setTitleValue] = useState(''),
     [selectedImage, setSelectedImage] = useState(),
     dispatch = useDispatch();
@@ -54,7 +54,7 @@ const NewPlaceScreen = ({ navigation: { goBack, navigate } }) => {
           style={styles.textInput}
         />
         <ImagePicker onImageTaken={setSelectedImage} />
-        <LocationPicker navigate={navigate} />
+        <LocationPicker navigate={navigate} getParam={getParam} />
         <Button
           title="Save Place"
           color={Colors.primary}

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Alert, StyleSheet } from 'react-native';
 //react-native-maps
 import MapView, { Marker } from 'react-native-maps';
 
@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const MapScreen = () => {
+const MapScreen = ({ navigation: { setParams, navigate } }) => {
   const [selectedLocation, setSelectedLocation] = useState();
 
   const mapRegion = {
@@ -19,6 +19,20 @@ const MapScreen = () => {
     longitudeDelta: 0.0421
   };
   let markerCoordinates;
+
+  const savePickedLocationHandler = useCallback(() => {
+    if (!selectedLocation) {
+      Alert.alert('Location error', 'Please select a location on the map.', [
+        { text: 'Okay' }
+      ]);
+      return;
+    }
+    navigate('NewPlace', { pickedLocation: selectedLocation });
+  }, [selectedLocation]);
+
+  useEffect(() => {
+    setParams({ saveLocation: savePickedLocationHandler });
+  }, [savePickedLocationHandler]);
 
   if (selectedLocation) {
     markerCoordinates = {

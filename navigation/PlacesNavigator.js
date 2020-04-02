@@ -1,4 +1,5 @@
-import { Platform } from 'react-native';
+import React from 'react';
+import { Platform, Text, TouchableOpacity } from 'react-native';
 //react navigation
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -38,7 +39,26 @@ const PlacesNavigator = createStackNavigator(
         title: 'Add Place'
       }
     },
-    Map: MapScreen
+    Map: {
+      screen: MapScreen,
+      navigationOptions: ({ navigation: { getParam } }) => ({
+        headerRight: () => (
+          <TouchableOpacity
+            style={{ marginHorizontal: 20 }}
+            onPress={getParam('saveLocation')}
+          >
+            <Text
+              style={{
+                fontSize: 16,
+                color: Platform.OS === 'android' ? 'white' : Colors.primary
+              }}
+            >
+              Save
+            </Text>
+          </TouchableOpacity>
+        )
+      })
+    }
   },
   {
     defaultNavigationOptions: {
