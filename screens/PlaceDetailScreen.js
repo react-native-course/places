@@ -46,11 +46,16 @@ const styles = StyleSheet.create({
   }
 });
 
-const PlaceDetailScreen = ({ navigation: { getParam } }) => {
+const PlaceDetailScreen = ({ navigation: { getParam, navigate } }) => {
   const placeId = getParam('placeId'),
     { address, imageUri, lat, lng } = useSelector((state) =>
       getPlaces({ state }).find((el) => el.id === placeId)
-    );
+    ),
+    selectedLocation = { lat, lng };
+
+  const showMapHandler = () => {
+    navigate('Map', { readOnly: true, initialLocation: selectedLocation });
+  };
 
   return (
     <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
@@ -59,7 +64,11 @@ const PlaceDetailScreen = ({ navigation: { getParam } }) => {
         <View style={styles.addressContainer}>
           <Text style={styles.address}>{address}</Text>
         </View>
-        <MapPreview style={styles.mapPreview} location={{ lat, lng }} />
+        <MapPreview
+          style={styles.mapPreview}
+          location={selectedLocation}
+          onPress={showMapHandler}
+        />
       </View>
     </ScrollView>
   );

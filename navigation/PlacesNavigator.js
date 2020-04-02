@@ -41,23 +41,29 @@ const PlacesNavigator = createStackNavigator(
     },
     Map: {
       screen: MapScreen,
-      navigationOptions: ({ navigation: { getParam } }) => ({
-        headerRight: () => (
-          <TouchableOpacity
-            style={{ marginHorizontal: 20 }}
-            onPress={getParam('saveLocation')}
-          >
-            <Text
-              style={{
-                fontSize: 16,
-                color: Platform.OS === 'android' ? 'white' : Colors.primary
-              }}
+      navigationOptions: ({ navigation: { getParam } }) => {
+        const readOnly = getParam('readOnly');
+        if (readOnly) {
+          return {};
+        }
+        return {
+          headerRight: () => (
+            <TouchableOpacity
+              style={{ marginHorizontal: 20 }}
+              onPress={getParam('saveLocation')}
             >
-              Save
-            </Text>
-          </TouchableOpacity>
-        )
-      })
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: Platform.OS === 'android' ? 'white' : Colors.primary
+                }}
+              >
+                Save
+              </Text>
+            </TouchableOpacity>
+          )
+        };
+      }
     }
   },
   {
