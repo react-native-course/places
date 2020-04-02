@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 //react redux
 import { useDispatch } from 'react-redux';
 //react native
@@ -37,10 +37,21 @@ const styles = StyleSheet.create({
 const NewPlaceScreen = ({ navigation: { goBack, navigate, getParam } }) => {
   const [titleValue, setTitleValue] = useState(''),
     [selectedImage, setSelectedImage] = useState(),
+    [selectedLocation, setSelectedLocation] = useState(),
     dispatch = useDispatch();
 
+  const locationPickedHandler = useCallback((location) => {
+    setSelectedLocation(location);
+  }, []);
+
   const savePlaceHanlder = () => {
-    dispatch(addPlace({ title: titleValue, imagePath: selectedImage }));
+    dispatch(
+      addPlace({
+        title: titleValue,
+        imagePath: selectedImage,
+        location: selectedLocation
+      })
+    );
     goBack();
   };
 
@@ -54,7 +65,11 @@ const NewPlaceScreen = ({ navigation: { goBack, navigate, getParam } }) => {
           style={styles.textInput}
         />
         <ImagePicker onImageTaken={setSelectedImage} />
-        <LocationPicker navigate={navigate} getParam={getParam} />
+        <LocationPicker
+          navigate={navigate}
+          getParam={getParam}
+          onLocationPicked={locationPickedHandler}
+        />
         <Button
           title="Save Place"
           color={Colors.primary}

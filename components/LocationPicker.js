@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const LocationPicker = ({ navigate, getParam }) => {
+const LocationPicker = ({ navigate, getParam, onLocationPicked }) => {
   const [isFetching, setIsFetching] = useState(false),
     [pickedLocation, setPickedLocation] = useState();
   const mapPickedLocation = getParam('pickedLocation');
@@ -42,8 +42,9 @@ const LocationPicker = ({ navigate, getParam }) => {
   useEffect(() => {
     if (mapPickedLocation) {
       setPickedLocation(mapPickedLocation);
+      onLocationPicked(mapPickedLocation);
     }
-  }, [mapPickedLocation]);
+  }, [mapPickedLocation, onLocationPicked]);
 
   const verifyPermissions = async () => {
     const result = await askAsync(LOCATION);
@@ -72,6 +73,7 @@ const LocationPicker = ({ navigate, getParam }) => {
         timeout: 5000
       });
       setPickedLocation({ lat: latitude, lng: longitude });
+      onLocationPicked({ lat: latitude, lng: longitude });
       setIsFetching(false);
     } catch (err) {
       setIsFetching(false);
