@@ -26,10 +26,15 @@ const styles = StyleSheet.create({
     height: 150,
     borderColor: '#ccc',
     borderWidth: 1
+  },
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%'
   }
 });
 
-const LocationPicker = () => {
+const LocationPicker = ({ navigate }) => {
   const [isFetching, setIsFetching] = useState(false),
     [pickedLocation, setPickedLocation] = useState();
 
@@ -46,6 +51,7 @@ const LocationPicker = () => {
     return true;
   };
 
+  //get static map of current user location
   const getLocationHandler = async () => {
     const hasPermission = await verifyPermissions();
     if (!hasPermission) {
@@ -70,20 +76,36 @@ const LocationPicker = () => {
     }
   };
 
+  //open map to pisk a location
+  const pickOnMapHandler = () => {
+    navigate('Map');
+  };
+
   return (
     <View style={styles.locationPicker}>
-      <MapPreview style={styles.mapPreview} location={pickedLocation}>
+      <MapPreview
+        onPress={pickOnMapHandler}
+        style={styles.mapPreview}
+        location={pickedLocation}
+      >
         {isFetching ? (
           <ActivityIndicator size="large" color={Colors.primary} />
         ) : (
           <Text>No location chosen yet!</Text>
         )}
       </MapPreview>
-      <Button
-        title="Get User Location"
-        color={Colors.primary}
-        onPress={getLocationHandler}
-      />
+      <View style={styles.actions}>
+        <Button
+          title="Get User Location"
+          color={Colors.primary}
+          onPress={getLocationHandler}
+        />
+        <Button
+          title="Pick on Map"
+          color={Colors.primary}
+          onPress={pickOnMapHandler}
+        />
+      </View>
     </View>
   );
 };
